@@ -1,0 +1,2 @@
+# Apuntes-de-Computaci-n-Cu-ntica-Quantum-Computing-Notes
+Pedagogical LaTeX notes on quantum computing architectures and error correction.  Spanish-first (with planned English translations). Ideal for students/researchers.  Apuntes pedagógicos en LaTeX sobre arquitecturas cuánticas y corrección de errores.  Prioridad en español (traducciones al inglés en progreso). Ideal para estudiantes/investigadores.
