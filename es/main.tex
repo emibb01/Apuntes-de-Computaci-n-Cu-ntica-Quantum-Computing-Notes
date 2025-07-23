@@ -1,0 +1,63 @@
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+\usepackage{graphicx}%
+\usepackage{physics}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+\usepackage{comment}
+\usepackage{natbib}
+%% as per the requirement new theorem styles can be included as shown below
+\theoremstyle{thmstyleone}%
+\newtheorem{theorem}{Theorem}%  meant for continuous numbers
+\newtheorem{proposition}[theorem]{Proposition}% 
+
+\theoremstyle{thmstyletwo}%
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+
+\theoremstyle{thmstylethree}%
+\newtheorem{definition}{Definition}%
+
+
+
+\raggedbottom
+%%\unnumbered% uncomment this for unnumbered level heads
+
+\begin{document}
+
+\title[Article Title]{Notas para la clase de computación cuántica.}
+
+\author*[1,2]{\fnm{Barragán} \sur{Emiliano}}\email{emilianob@ciemcias.unam.mx}
+
+
+\maketitle
+
+El campo de la computación cuántica(QC) y de la información cuántica(QI) es uno de los campos de investigación activa más prometedores de los últimos 45 años. El trabajo de Feyman y otras personas nos introdujeron por primera vez un nuevo lenguaje de computación, basado en la física cuántica, que nos permitía abandonar la lógica binaria de su contraparte clásica, proveyéndonos una manera novedosa para simular nuevos problemas y diseñar nuevos algoritmos con la meta final de realizar ciertas tareas de manera más rápida que su contraparte clásica.\\
+
+A pesar de que la QC y la QI son dos de las áreas de investigación más vanguardistas, estas utilizan uno de los sistemas cuánticos más sencillos, el modelo de dos niveles. Esto tiene una enorme ventaja desde el punto de vista didáctico, ya que permite desarrollar actividades interesantes y útiles incluso en un entorno de pregrado. No obstante, el QC y la QI tienen potencial para aplicaciones en muchas áreas diversas de las ciencias físicas y sociales, como la criptografía (procedimientos de comunicación más seguros utilizando principios cuánticos), finanzas (algoritmos de optimización cuántica para guiar el comercio), la gravedad cuántica(Simulaciones más exactas de agujeros negros utilizando circuitos cuánticos), entre otras.\\
+
+A pesar de los avances significativos en los algoritmos cuánticos y la teoría de la comunicación, el mayor impedimento en el campo es la creación de una computadora cuántica escalable con la capacidad de realizar las tareas donde teóricamente debería tener ventaja a una computadora clásica. En los últimos años ha habido algunos avances en la construcción de estas computadoras; sin embargo, aún no existe un consenso científico sobre las plataformas más adecuadas para construir los qubits y la mejor arquitectura para las computadoras cuánticas, por eso estás notas buscan dar una introducción de alguno de los métodos utilizados a la fecha de la escritura de estas notas.
+
+Las notas se organizan de la siguiente manera: en la primera parte se presentará y analizará las ventajas y desventajas de alguno de los métodos utilizados para crear qubits, mientras que en la segunda sección se abordarán las dificultades actuales para crear una arquitectura para una computadora cuántica así como uno de los problemas más grandes en el área que es la mitigación del error.
+
+% Main content
+\input{secciones/1_tecnologias_qubits.tex}
+
+\newpage
+\nocite{*}
+\bibliographystyle{nature}
+\bibliography{bibliography}
+
+\end{document}
+
+

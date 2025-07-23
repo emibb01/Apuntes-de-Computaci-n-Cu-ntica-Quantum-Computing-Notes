@@ -1,0 +1,243 @@
+\section{Algunas Tecnologías para la creación qubits.}
+
+Se explicará de manera breve algunas de las maneras de crear qubits que se utilizan en la actualidad y se analizará su viabilidad para crear Computadoras Cuánticas, para esto se usará los criterios de DiVincenzo:
+
+\begin{itemize}
+    \item Los qubits deben de estar bien caracterizados y ser fáciles de producir. Además de ser escalables i.e. deben poder manejar una cantidad arbitraria de qubit.
+    \item Debe ser posible iniciar un qubit en un estado base e.g |0>
+    \item El tiempo de coherencia debe ser mayor al de típicos cálculos.
+    \item Debe ser posible implementar un grupo universal de compuertas.
+    \item Debe existir una manera confiable de leer la información de un qubit.
+    
+\end{itemize}
+
+\subsection{Iones atrapados}\label{sec2}
+Un ion es un núcleo o molécula a la que se le ha aumentado o disminuido su nube de electrones por una unidad. Después de ionizar un elemento, este presentará un comportamiento hidrogenoide, con estados de energía 
+$\ket{a_{i}}$ con $i\epsilon\mathbf{N}$ caracterizados por niveles de energía $E_{i}$. Dos de estos estados serán caracterizados y definidos como $\ket{1}$ y $\ket{0}$.
+Tomando en cuenta el movimiento del ion en el espacio, su Hamiltoniano tomaría la forma:
+\begin{equation}
+    H=H_{a}+\frac{\Vec{P}}{2m}+V(x)
+\end{equation}
+Un ion recién creado, por ejemplo $^{40}Ca^{+}$, tiene una velocidad $\approx$ de 1m/s, a tales energías se puede considerar como un sistema clásico de "motional prespective", para crear un sistema cuántico debemos limitar el ion en rango (atraparlo) y en energía(enfriarlo)\\
+Las dos trampas más usadas son la trampa de Penning y la trampa de Paul.En este artículo solo se analizará de manera superficial la trampa de Paul, ya que esta es la más utilizada en ambientes de academia e industria.\\
+Un teorema planteado por Earnshaw nos dice que una partícula cargada no puede encontrar equilibrio en potenciales eléctricamente estáticos que satisfagan la ecuación de Laplace. Sin embargo, es posible demostrar que en el caso de potenciales rotando a frecuencias particulares aparecen soluciones de la ecuación de movimiento correspondiente a un punto de equilibrio dinámico, logrando así confinar la partícula en un volumen.\\
+Suficientemente, cerca del centro del volumen donde confinamos nuestro ion, al cual llamamos nuestra trampa, podemos aproximar el comportamiento del ion como un oscilador armónico en 3 dimensiones. El sistema más utilizado de esta trampa en C.C. es conocida como "ion trap", donde la fuerza de dos dimensiones es mucho mayor al de la última. Para que esta aproximación se cumpla necesitamos que el ion se mantenga cerca del centro de la trampa. Por esta razón es necesario "enfriar al ion"(en este contexto enfriar se refiere a disminuir la ENERGÍA CINÉTICA) para ello se utiliza un método conocido como "laser cooling", y por último, para evitar la colisión entre partículas, ya que estas colisiones causan cambios en su energía cinética se pondrá en un estado de vacío ultra-alto, esto se traduce a que en la región en la que está nuestra trampa la presión es del orden $10^{-11}Torr$.
+\subsubsection{Láser cooling}
+El enfriamiento se divide en dos regímenes, uno clásico, en el que el valor esperado $\expval{\hat{H_{SHO}}}$ es mucho mayor que el valor del oscilador cuántico simple(QSHO), $\hbar\omega_{z}$ y uno cuántico, donde $\expval{\hat{H_{SHO}}}$ es comparable a $\hbar\omega_{z}$
+\subsubsubsection{Doppler cooling(Enfriamiento en el régimen clásico)}
+Un ion se encuentra normalmente en el régimen clásico cuando es creado, el método más común usado para el enfriamiento en este régimen es conocido como "Dopler Cooling". Se comienza identificando dos estados, teniendo identificados la transición entre dos estrados con frecuencia $\omega$ y "linewidth" $\Gamma$, que en este contexto el "linewidth" representa el ancho máximo de absorción de fotones en el espacio de frecuencia. Donde $\Gamma$ es mucho mayor que $\hbar\omega_{z}$, a estos iones se les irradia con un láser monocromático con frecuencia un poco menor al de la transición entre los estados y momento $\hbar\Vec{k}$.Ahora suponemos un ion que absorbe un fotón y, por lo tanto, se excita y de manera casi inmediata emite un fotón regresando a su estado base.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{imagenes//iones/efecto_doppler.png}
+    \caption{El inciso a) y b) representa el ion absorbiendo fotones del láser monocromático dirigiéndose en su dirección y el inciso c) es la emisión en una dirección aleatoria del fotón. El ancho de las flechas representa la cantidad de momento de los fotones o del ion según corresponda. Imagen tomada de \cite{Bernardini_trapped_ions}}
+    \label{fig:efecto-dopples}
+\end{figure}
+Comenzando en el momento en el que el ion absorbe el fotón del láser.
+Las ecuaciones de conservación de la energía del sistema es:
+\begin{equation}\label{clasical_energy_cons}
+    \hbar\omega_{0}+\frac{1}{2}Mv^{\prime 2}=\hbar\omega_{abs}+\frac{1}{2}Mv^{2}
+\end{equation}
+Y la de la conservación del momento del sistema es
+\begin{equation}\label{clasical_momentum_cons}
+   Mv^{\prime}=Mv+\hbar\Vec{k}
+\end{equation}
+Donde los términos con subíndice abs representan los valores después de la absorción del fotón. Sustituyendo el valor de $v^{\prime}$ de la ecuación (\ref{clasical_momentum_cons}) en la ecuación (\ref{clasical_energy_cons}) obtenemos:\
+\begin{equation}
+    \omega_{0}=\omega_{abs}-v\cdot\Vec{k}-\frac{\hbar\Vec{k^{2}}}{2m}
+\end{equation}
+El segundo término de esta ecuación es conocido como el "cambio Doppler", y el tercero como el "cambio de recoil" que es mucho menor al cambio Doppler a altas velocidades, por lo que despreciaremos el término de recoil para estos primeros cálculos.\\
+Ahora pasamos al proceso por el cual el ion emite el fotón, esta vez la combinación de la ecuación de la conservación del momento y la energía, nos da:
+\begin{equation}
+    \omega_{0}=\omega_{em}-v\cdot\Vec{k}+\frac{\hbar\Vec{k^{2}}}{2m}
+\end{equation}
+Promediando sobre todos los procesos de "scattering" por los que se emite el fotón, $\expval{\hbar v^{\prime}\cdot\vec{k}}=0$ por lo que el cambio promedio en la energía por el scattering es:
+\begin{equation}
+    \hbar\nabla\omega=\expval{\hbar(\omega_{em}-\omega_{abs})}=-\hbar v\cdot\Vec{k}
+\end{equation}
+Esta ganancia de energía fotónica $v\cdot\Vec{k}$ es igual a la perdida de energía cinética del ion i.e. $\nabla E_{k}=\hbar v\cdot\Vec{k}+\hbar<0$, llevando al "enfriamiento".\\
+Este enfriamiento no es ilimitado, una forma de encontrar el límite es tomando en cuenta que cuando el ion se enfría lo suficiente, el término de recoil ya no puede ser despreciado. Tomando esto en cuenta el cambio en la energía cinética se vuelve 
+\begin{equation}
+    \nabla E_{k}=\hbar v\cdot\Vec{k}+\hbar k^{2}/2M<0\Rightarrow -\hbar v\cdot\Vec{k}>\hbar k^{2}/2M
+\end{equation}
+con $v\cdot\Vec{k}<0$, imponiendo así un límite hasta para el cual podemos usar este procedimiento para el enfriamiento, este punto es conocido como el límite de recoil.
+
+\subsubsection{Régimen cuántico(Side band cooling).}
+
+Después del Doppler cooling el ion se encuentra lo suficientemente frío para considerar los grados de libertad del QSHO, en este punto el ion tiene en promedio $\expval{n}=10$ niveles de energía. Para iniciar nuestro tratamiento del qbit, debemos enfriarlo al estado base, para esto se elige un "linewidth" $\Gamma_{s}$, tal que $\Gamma_{s}<<\omega_{z}$ para que después de la absorción se pueda diferenciar estados $\omega_{0}\pm\omega_{z}$, de los estados de frecuencia $\omega_{0}$. Llamamos el estado menor y mayor de esta transición, el estado base $\braket{g}$ y el estado excitado $\braket{e}$. El hamiltoniano libre de este sistema es entonces:
+
+\begin{equation}
+    H_{0}=\hbar\omega_{z}a^{\dagger}a+\frac{\hbar}{2}\omega_{0}\sigma_{z}
+\end{equation}
+Inicialmente, el ion se encuentra en el estado $\braket{g,n}$, donde esta notación nos indica que se encuentra en un estado atómico $\braket{g}$ y estado de vibración QSHO $\braket{n}$. La meta es conseguir encontrar el estado $\braket{g,0}$, esto lo conseguimos haciendo las siguientes transiciones
+\begin{equation}
+    \braket{g.n}\rightarrow\braket{e,n-1}\rightarrow\braket{g,n-1}\rightarrow\braket{e,n-2}\rightarrow...
+\end{equation}
+Este conjunto de transiciones las conseguimos al hacer interactuar el ion con un láser. El hamiltoniano de esta interacción está dado por:
+\begin{equation}
+    H=\frac{1}{2}\hbar\Omega(\sigma_{+}+\sigma_{-})\left[e^{i(kz-\omega t+\phi)}+e^{-i(kz-\omega t+\phi)}\right]
+\end{equation}
+Donde $k$, $\omega$ y $\phi$ es el vector de onda, la frecuencia y la fase del láser. $\Omega$ es la fuerza de interacción entre iones y $\sigma_{+}$, $\sigma_{-}$ son los operadores de subida y bajada para los grados de libertad internos del sistema.\\
+Definimos $\eta=k\sqrt{\frac{\hbar}{2M\omega_{z}}}$ como el parámetro de Lamb-Dicke. Tras alguna aproximación en las que no profundizaremos, pero se pueden ver en profundidad en \cite{Bernardini_trapped_ions}
+,podemos elegir la frecuencia de disparo del láser $\nabla=\omega-\omega_{0}=-\omega_{z}$, de la aproximación obtenemos el Hamiltoniano independiente del tiempo de la resonancia.
+\begin{equation}
+    H^{rsb}\approx\frac{1}{2}\hbar\eta\Omega(a\sigma_{+}e^{i\hat{\phi}}+a^{\dagger}\sigma_{-}e^{-i\hat{\phi}})
+\end{equation}
+
+Entonces, el operador de evolución-temporal es:
+\begin{equation}
+    U^{rsb}(t)\braket{g,n}=\cos{\Bar{\omega}t}\braket{e,n-1}
+\end{equation}
+Donde $\Bar{\omega}=\eta\Omega\sqrt{n}/2$. Como consecuencia inmediata de esto, podemos controlar la evolución del operador. 
+Si aplicamos el láser por $t=\pi/\eta\Omega\sqrt{n}$ desaparece el término del coseno y el término de seno toma el valor de $\braket{e,n-1}$, inmediatamente el ion decae en $\braket{g,n-1}$. Haciendo esto repetidamente podemos llegar al estado base del QSHO.
+\subsubsection{Análisis de las ventajas y desventajas.}
+
+Como vimos en las secciones anteriores, los qbits creados con los iones pueden ser llevados al estado base con gran certeza y utilizando láseres lo suficientemente precisos, esto nos permite caracteriazar y aizlar de manera efectiva los dos niveles de energia base del ion, por lo tanto, cumple el primer y segundo criterio de Divincenzo.
+
+En cuanto al tercer punto, el tiempo de coherencia de los iones de alrededor de $10^{-1}s$, que es mucho mayor al tiempo promedio necesario para aplicar una compuerta ($10^{-6}$s)\\
+Con la información dada hasta el momento no podemos asegurar que se cumpla el criterio 4 y 5, para más información sobre la manipulación y lectura de los qubits se puede leer %referencia.
+. Los criterios anteriores se cumplen sin problema para uno o un número pequeño de qbits. Lo que nos lleva al mayor problema de los iones atrapados es la escalabilidad.
+El tiempo de coherencia de larga cadenas de iones se acorta, esto es un gran problema para cadenas de 100 o más iones, donde la coherencia es en general menor al necesario para aplicar las compuertas. Leer la información para estas cadenas también se vuelve un problema, ya que no existe láseres lo suficientemente precisos para obtener de manera confiable la información que contienen.\\
+En la actualidad se está trabajando en nuevas formas de manipular los iones atrapados para mejorar su escalabilidad, para más información se pueden leer los artículos %ref 74 y 75
+
+\subsection{Átomos neutros}
+
+Otros de los métodos más comunes para la creación de qbits y una de las tecnologías que avanzan más rápidamente son los átomos neutros, utilizado en la industria por empresas como QuEra. Los átomos neutros, como indica su nombre, son aquellos donde el número de electrones y protones es el mismo. 
+Los átomos neutros pueden ser utilizados como qbits explotando los niveles de energía "hyperfine", este término se refiere a pequeños cambios y separaciones en los niveles de energía atómica, y los estados de Rydberg, estados excitados que siguen la fórmula de Ridberg, la cual será desarrollada más adelante.\\
+Profundizando en la estrctura hyperfine, esta estructura es relevante en sistemas de muy bajas temperatuuras. Sea $\mathbf{S}$ el operador spin electronico y $\mathbf{I}$ el operador Spin Nuclear, el Hamiltoniano de la estrcutura hyperfine esta definido como:
+\begin{equation}
+    H=\lambda\sum_{k}\mathbf{S_{k}}\otimes\mathbf{I_{k}}
+\end{equation}
+Que abrebiamos como $\lambda\mathbf{S}\cdot\mathbf{I}$\\
+Definimos el operador spin hyperfine como:
+
+\begin{equation}
+    \mathbf{F}\equiv\mathbf{S}\otimes I+I\otimes\mathbf{I}
+\end{equation}
+De igual manera introducimos la manera mas sencilla de escribir el operador como $\mathbf{F}=\mathbf{S}+\mathbf{I}$.\\
+Considerando la identidad
+
+\begin{equation}
+    \mathbf{S}\cdot\mathbf{I}=\frac{1}{2}\left[F(F+1)-I(I+1)-3/4\right]
+\end{equation}
+Derivado de $F^{2}$ 
+
+\subsubsection{Trampa Magneto-Óptica}
+
+Las trampas magneto ópticas son una de las formas más comunes de atrapar átomos neutros en temperaturas muy bajas.\\
+Supongamos un átomo neutro ficticio, con niveles de energía mostrados en la figura \ref{fig:niveles-de-energia-atomo-neutro}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{imagenes//atomos-neutros/niveles-de-energia-atomos-neutros.png}
+    \caption{Estados excitados con $J^{\prime}=1$ separación-Zeeman por un gradiente de un campo magnético variando en $z$. Si el átomo se mueve en dirección $-z$ del centro de la trampa, absorbe un fotón polarizado $\sigma^{+}$ llevando a la transición $m_{J}=0\rightarrow m_{J^{\prime}}=1$ y como resultado es empujado al centro de la trampa.}
+    \label{fig:niveles-de-energia-atomo-neutro}
+\end{figure}
+
+el cual es colocado al centro de dos bobinas anti-helmholtz, para generar un campo magnético y seis láseres polarizados linealmente en frecuencia de rojos rodeándolo, tal que tres tiene polarización positiva $\sigma^{+}$ y tres $\sigma^{-}$, colocados como en la figura. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{imagenes//atomos-neutros/trampa-magneto-optica.png}
+    \caption{Ejemplo de una trampa magneto-óptica}
+    \label{fig:enter-label}
+\end{figure}
+
+Sometemos al átomo a un campo magnético dependiente del espacio inducido por las bobinas $B(z)=\frac{dB_{z}}{dz}(-\frac{x}{2},\frac{y}{2},z)$. Los estados excitados $J=1$ sufren una separación-Zeeman tal que la energía del estado excitado $\braket{Jm_{J}}$ se separa como
+\begin{equation}
+    \Delta E=m_{J},g_{J},\mu_{B},\frac{dB_{z}}{dz}(-\frac{x}{2},\frac{y}{2},z)
+\end{equation}
+A este punto suponemos que nuestro átomo ha sido previamente enfriado por los métodos ya discutidos en la sección iones atrapados(\ref{sec2}), entonces nuestro átomo tendera a atrapar una mayor cantidad de átomos positivos $\sigma^{+}$ al moverse hacia uno de los ejes positivos y hará lo contrario al moverse hacia uno de los ejes negativos, esto empujara nuestro átomo hacia el centro de la trampa, consiguiendo lo deseado. Es importante notar que para hacer más pequeña la trampa se debe disminuir el gradiente del campo magnético, mientras se mantiene el "linewidth" del láser.
+\subsubsection{Ventajas y desventajas}
+El método de átomos neutros es fácilmente escalable, superando en ese sentido a los iones atrapados. Átomos neutros previamente enfriados pueden ser atrapados por una MOT de hasta $\approx10^{6}$ sin perder tiempo de coherencia, por lo que cumplen y superan a los iones atrapados en el primer criterio de DiVincenzo.\\
+En cuanto al segundo criterio, los átomos neutros, al igual que los iones atrapados, son enfriados utilizando laser cooling, por lo que cumplen de igual manera con el segundo criterio de DiVincenzo. En cuanto a su tiempo de coherencia, es esperado que sea mayor al de sus compuertas y por su carga neutra, este tiempo no debería aumentar para larga cadenas, siendo esta su mayor ventaja referente a los iones atrapados.\\
+En cuanto las compuertas estas pueden ser aplicadas sin ningún problema para un solo qbit, siendo estás más difíciles de aplicar para un par de ellos, siendo esta su mayor desventaja, ya que aún no hay maneras fiables y rápidas de aplicar compuertas a pares de qbits para átomos neutros y por su carga neutra la aplicación de las compuertas es más lenta que en otros métodos. Su medición, en cambio, no es tanto un desafío gracias al desarrollo de tecnologías, en las cuales no se profundizarán, pero si el método le resulta interesante se sugiere investigar, como "electron-shelving method".
+
+\subsection{Superconductores}
+Los superconductores son uno de los acercamientos más prometedores de la actualidad, siendo este el método elegido por algunas de las mayores empresas de tecnología en el sector, un ejemplo de esto es la computadora cuántica de Google "sycamore" y la computadora de IBM "eagle".\\
+El acercamiento a crear computadoras cuánticas con superconductores es muy diferente al de los métodos anteriores, en los otros métodos trabajamos con átomos dados por la naturaleza, mientras que en este método debemos crear átomos "artificiales". Para crear esto se utiliza una tecnología llamada transmon.
+\subsection{Del oscilador armónico al transmon}
+
+Como hemos visto en los otros tipos de qbit, una buena primera aproximación es un oscilador armónico, en el caso de los superconductores podemos conseguir un oscilador harmonico cuántico utilizando circuitos LC, el cual consiste de un elemento capacitante y un inductivo, al estar creado con elementos superconductores a bajas temperaturas. Este simple circuito con frecuencia $\omega$ puede tener comportamientos cuánticos. Un resonador cuántico es, entonces, un conjunto de estos osciladores cuánticos LC, con cada modo del resonador con un oscilador con una frecuencia arbitraria bien definida.\\
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{imagenes//superconductores/LC-circuito.png}
+    \caption{Circuito para un oscilador paralelo LC (QSHO) con un inductor L en paralelo con un conductor C}
+    \label{fig:enter-label}
+\end{figure}
+
+Este sistema puede ser caracterizado con dos cantidades sin dimensión $\mathbf{\phi}$ y $\mathbf{n}$, donde $\mathbf{\phi}$ representa la cuantización del flujo magnético que cruza por el inductor y $\mathbf{n}$ es la diferencia entre el número de cargas en cada placa del capacitor en unidades $2e$, siendo esto un par de Cooper. Estas cantidades tienen las relaciones canónicas de conmutación.
+\begin{equation}
+    [\mathbf{\phi},\mathbf{n}]=i
+\end{equation}
+Pudiendo así escribir el hamiltoniano para estos osciladores como:
+\begin{equation}
+    H=\frac{E_{L}}{2}\phi^{2}+4E_{c}n^{2}
+\end{equation}
+Donde $E_{L}=\frac{\hbar^{2}}{4e^{2}L}$ y $E_{c}=\frac{e^{2}}{2C}$. De manera alternativa podemos escribir el hamiltoniano, según la frecuencia $\omega$ y la impedancia $z$ del circuito, definiendo
+$\omega=\frac{1}{LC}$ y $z_{0}=\sqrt{\frac{L}{C}}$, tal que:
+\begin{equation}
+    H=\hbar\omega\left[\frac{R_{Q}}{2z_{0}}\phi+\frac{z_{0}}{2R_{q}}n\right]
+\end{equation}
+Donde $R_{Q}$ es la resistencia cuántica reducida para superconductores $R_{Q}=\frac{\hbar}{4e^{2}}$\\
+Lineal izando el Hamiltoniano podemos encontrar los operadores escalera $a$ y $a^{\dagger}$
+\begin{equation}
+    a=\sqrt{\frac{R_{q}}{2z_{0}}}\phi+i\sqrt{\frac{z_{0}}{R_{q}}}n
+\end{equation}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{imagenes//superconductores/QSHO-nieveles-de-energia-equidistantes.png}
+    \caption{Niveles de energía del QSHO, equidistantes con distancia $\hbar\omega_{r}$}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsubsubsection{Uniones de Josephson}
+
+Los resonadores superconductores no son suficientes para codificar información cuántica, ya que los niveles de energía están separados por un espacio constante $\hbar\omega$, lo cual no permite tratar cada cambio de manera individual. La manera más fácil de agregar un elemento no lineal es utilizando uniones de Josephson.\\
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{imagenes//superconductores/josephson-qbit.png}
+    \caption{Qbit de Josephson, donde el inductor no lineal $L_{j}$(representaado por una union de Josephson en la caja naranja) deriavada por el capacitor, $C_{s}$}
+    \label{fig:enter-label}
+\end{figure}
+
+Las uniones de Josephson son dos campas de superconductores con una barrera oxida entre medio. El espacio de la unión está determinada por el número de pares de Cooper que hay en cada capa superconductora, este es el observable ya definido como $\mathbf{n}$, utilizando esto el hamiltoniano de la unión se puede escribir como:
+\begin{equation}
+    H=-\frac{E_{J}}{2}\sum^{\infty}_{n=-\infty}(\braket{n}\ket{n+1}+\braket{n+1}\ket{n})
+\end{equation}
+Donde $E_{J}$ es la energía de Josephson. Los operadores $\braket{n}\ket{n+1}$ y su conjugado hermitiano, son los operadores unitarios que nos permiten cambiar el nivel de energía a un nivel más o uno menos. Esta transición es la base conjugada puede ser escrita como $e^{\pm\phi}$, haciendo esta sustitución el hamiltoniano en la  base de flujo es:
+\begin{equation}
+    H=\frac{E_{j}}{2}[e^{i\phi}+e^{-i\phi}]=E_{j}\cos\phi
+\end{equation}
+Desarrollando el coseno a segundo orden nos da una energía inductiva comúnmente conocida como inductancia de Josephson $L_{j}=\frac{\hbar^{2}}{4e^{2}E_{j}}$, esta inductancia no linear es la clave para analizar los cambios de energía de manera individual.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{imagenes//superconductores/niveles-de-energia-trasmon.png}
+    \caption{Niveles de energía del Trasmon. La unión de Josephson cambia los niveles de energia cuadracticos(\ref{fig:niveles-de-energia-atomo-neutro}) en sinusoidales, lo cual permite aislar los dos niveles de energia base $\ket{0}$y $\ket{1}$. Creando un subespacio computacional.}
+    \label{fig:niveles-de-energia-trasmon}
+\end{figure}
+
+\subsubsubsection{Transmon}
+El resultado de la integración de la unión de Josephson es conocido como transmon, modifica la forma de la energía potencial, obteniendo así el hamiltoniano modificado
+\begin{equation}
+    H=4E_{c}n^{2}-E_{j}\cos\phi
+\end{equation}
+Con $E_{c}$ es la capacitancia total del sistema. Al ingresar esta unión de Josephson la energía deja de tomar una forma estrictamente parabólica y toma ahora una forma sinusoidal, lo que hace el espectro de la energía no degenerado, lo cual nos permite dos únicos niveles de energía, creando así nuestro qbit.
+
+\subsubsection{Ventajas y Desventajas}
+
+En cuanto al primer criterio los qubits con superconductores están bien caracterizados y nuestras habilidades para crearlos es bastante buena, como prueba de esto están los dos computadores mencionados en el inicio, a pesar de esto su escalabilidad aún deja que desear, la necesidad de mantener los qbit a una temperatura muy baja y su tamaño mucho mayor al compararlos con otros métodos crean un gran problema al intentar escalar a sistemas de un gran número de qbits. En cambio, el segundo criterio se cumple sin problema.\\
+El mayor problema se encuentra con el tercero y quinto criterio, el gran tamaño de los trasmon y la necesidad de mantenerlos a temperaturas muy bajas, hace los sistemas muy susceptibles a ser afectados por su interacción con el ambiente haciendo su tiempo de coherencia bajo, la aplicación de compuertas de un solo qubit no representa ninguna dificultad, pero el tiempo de coherencia representa un desafío muy grande al aplicar compuertas a múltiples qubits, además de que los hamiltonianos discutidos solo se cumplen cuando el número de fotones no supera un punto crítico. Esta dificultad de limitar las interacciones con el ambiente afecta también su tiempo de lectura, donde una vez más los resultados de la aplicación de compuertas a un único qubit pueden ser leídos sin problema, pero siendo muy difíciles para compuertas de múltiples qubits. El cuarto criterio es cumplido sin ningún tipo de problema.\\
+
+\subsection{Otros qbits}
+
+\textbf{Fotones:} Esta tecnología está siendo desarrollada por empresas como Xanadu, PsiQuantum y otras instituciones, arrojando resultados prometedores. En los diferentes métodos para crear qbits la interacción de estos sistemas con sus alrededores crean una dificultad para la escalabilidad de estos sistemas, cosa que no ocurre utilizando fotones su interacción prácticamente inexistente con sus alrededores y ellos mismos hace que su estabilidad sea teóricamente infinita. Sin embargo, esta ventaja es a la vez un problema, ya que hace muy difícil la aplicación de compuertas a estos qbits.\\
+Para manipular los fotones se utilizan principalmente "linear materials" que no interactúa con la luz. Con estos materiales podemos crear un conjunto de estados Gausianos. Para obtener los estados Gausianos deseados se utilizan operaciones Gaussianas que transforman un estado en otro. Estas operaciones son fáciles de crear utilizando elementos ópticos comunes en los laboratorios, como:
+guías de onda, polarizadores de onda y expansores de haz.\\
+
+\textbf{Spin en semiconductores:} En este método el spin de electrones o núcleos en semiconductores, principalmente en silicona, pero también se ha logrado utilizar otros semiconductores como galio, arsénico, germanio y recientemente grafeno. Los núcleos o electrones colocados en el centro de los semiconductores son expuestos a un poso de potencial, este sistema se conoce como "quantum dots", sobre los posos de potencial se coloca un electrodo de puerta del transistor, al aplicar diferentes voltajes a la compuerta se puede modificar el spin de los núcleos o electrones.\\
+Las p[principales ventajas de este método son su capacidad de ser creados con tecnología ya existente, ya que la tecnología necesaria es la misma que la utilizada para crear semiconductores, su alto tiempo de coherencia, el hecho de que al estar rodeados por un semiconductor esto lo aislá del ambiente externo su tamaño permite crear chips con múltiples qbits. Los principales problemas de este método es el ruido causado por fluctuaciones electrónicas en la compuerta, los dos niveles de energía suelen ser muy cercano el uno del otro y el crearlos en un proceso inconsistente. Es importante mencionar que la posibilidad de escalar esta tecnología aún no ha sido probado en la práctica.
