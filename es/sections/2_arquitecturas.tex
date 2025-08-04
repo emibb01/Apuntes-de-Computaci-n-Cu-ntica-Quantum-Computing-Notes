@@ -1,0 +1,130 @@
+\section{Arquitectras y tecnologias referentes a la computación cuántica}
+
+La computación cuántica promete revolucionar la tecnología al permitir el desarrollo de algoritmos capaces de realizar tareas que las computadoras clásicas no pueden ejecutar de manera eficiente. Sin  embargo, para alcanzar este futuro, es necesario crear un sistema de miles o incluso millones de qubits interconectados.\\
+
+Ya hemos visto algunas de las tecnologías usadas para crear qubits, el diseño de la arquitectura del hardware que permita operarlos sigue siendo una de las mayores dificultades para la construcción de computadoras cuánticas escalables y funcionales. Esta información es más confidencial y difícil de acceder en comparación de los detalles sobre la creación de qubits. Por esa razón, este artículo presentará una visión general del desarrollo de la arquitectura de los diferentes chips cuánticos.\\
+
+Es fundamental comprender que estas arquitecturas siempre combinará una parte clásica, la cual es necesaria para cosas como la corrección de error y la ejecución de algoritmos que utilicen una combinación de lógica clásica y cuántica. Además, es importante destacar que estos desarrollos tecnológicos son muy heterogéneos entre las diferentes empresas y universidades. Por lo tanto, estas notas se enfocarán en explicar las dificultades actuales asociadas a la creación de una arquitectura para una computadora cuántica.\\
+
+Este capítulo se dividirá en dos secciones. La primera abordará las dificultades para construir computadoras cuánticas basadas en el modelo de circuitos, considerado el estándar universal en la computación cuántica. La segunda sección se centrará en la corrección de errores, un aspecto crucial debido a la fragilidad de los qubits frente a las interacciones con el entorno. En general, el capítulo se enfocará en los desafíos tecnológicos que deben superarse para desarrollar un hardware que permita construir computadoras cuánticas flexibles y escalables.
+
+ 
+\subsection{Hacia una computación cuántica de pila completa(full-stack)}\label{sec2}
+
+Como mencionado brevemente en la introducción, una computadora cuántica siempre va a consistir de una parte clásica y una cuántica, esto por dos principales razones: la aplicación de una computadora cuántica a un contexto real siempre tendrá algoritmos donde la lógica clásica mostrará un mejor resultado que la lógica cuántica; y la segunda, la introducción de error requiere un seguimiento de la parte clásica para corregir cualquier error introducido en la parte cuántica.\\
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=\linewidth]{imagenes//stack/stack-quantum.png}
+    \caption{Ejemplo del full stack de una computadora cuántica. tomado de a heterogeneus quantum computer}
+    \label{fig:stack-qc}
+\end{figure}
+
+En la actualidad el stack que se propone para una computadora cuántica  puede ser observada en la figura \ref{fig:stack-qc}. Comenzando el análisis desde la cima de la torre podemos ver las casillas de color rojo, tenemos que en la primera capa de la pila se colocarían los algoritmos creados por el usuario, en la segunda capa, los lenguajes de programación que se desarrollarían para explotar las capacidades del hardware cuántico y los paradigmas de estos lenguajes de programación(Los paradigmas de programación son las filosofías que guían la forma en la que los desarrolladores crean software. Estos son:  imperativo, funcional, orientado a objetos, etc.), actualmente el paradigma más popular para el desarrollo de software cuántico es el orientado a objetos. Un ejemplo de esto es qiskit, la paquetería de python desarrollada por IBM o en ese mismo lenguaje de programación tenemos otros ejemplos como la paquetería de código abierto CIRq desarrollada por Google.
+
+En la tercera capa podemos ver bloques color naranja, en estos bloques se encuentra la aritmética cuántica y el compilador, en esta parte se crearan los qubits lógicos y se compilara los algoritmos, estos compiladores constaran de dos partes una primera donde se compilara la parte clásica de los algoritmos y después una parte cuántica donde se transformara el código clásico que se desea correr en los qubits lógicos a compuertas que puedan ser ejecutados en estos.\\
+
+La siguiente capa consta del conjunto de instrucciones de la arquitectura cuántica o por sus siglas en inglés QISA, esta capa la podemos ver caracterizada de color amarillo, esta es la capa que conecta la parte de software de la primera capa con el hardware de las últimas capas. Aquí se toma las compuertas compiladas en la capa anterior y las transforma en instrucciones que realiza el hardware, además de conectar esta información con la parte de la corrección de errores que se encuentra en la siguiente capa y se explorara en profundidad en la siguiente sección por ser esta uno de las mayores dificultades para crear una computación cuántica escalable, 
+
+
+La siguiente capa, conocida como la capa de control, representada en la pila con color verde, se encarga de tomar la información procesada en el QISA. En esta etapa, el algoritmo desarrollado en un lenguaje de programación se traduce a información binaria comprensible para el sistema. Esto está basado en la tabla de Q Symbol, un ejemplo de esta tabla se puede observar en \ref{fig:Q-symbols}, en esta tabla la computadora guarda la información sobre la ubicación de todos los qubits físicos que continúan vivos, su tiempo de coherencia y las compuertas que se les han aplicado. En esta misma capa se encuentra la parte de corrección de errores, la cual se explicará en profundidad en la siguiente sección.\\
+
+En los costados de la pila, de color gris, abarcando 3 niveles, se encuentran el nombre de algunos algoritmos del subsistema que se encargan de la corrección de error; algunos de los mostrados en la pila serán explicados de manera detallada en la siguiente sección.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{imagenes/stack/Captura de pantalla 2024-11-26 100500.png}
+    \caption{Ejemplo de una entrada en la tabla de simbolos Q.}
+    \label{fig:Q-symbols}
+\end{figure}
+
+Por último, al final de la pila se encuentran los procesadores, uno clásico y el otro cuántico, donde se encuentran nuestros qubits físicos.\\
+
+
+\subsection{Corrección de error.}
+
+Como se ha venido hablando en la sección anterior una de las mayores dificultades de la computación cuántica es la fragilidad que los estados cuánticos. En qbits superconductores se tienen tiempos de coherencia no mucho mayores a más de 400 milisegundos. %citar pagina ibm %
+y un porcentaje de error de alrededor de un 0.1 \% por lo que es imposible imaginar una computadora cuántica sin corrección de errores.\\
+
+La corrección de error en una computadora cuántica varía mucho de la de una clásica y es particularmente más complicada por tres principales razones:
+\begin{itemize}
+    \item No podemos copiar los estados  (teorema de la no clonación).
+    \item Medir un estado puede destruir la información del qbit.
+    \item El error es continuo, a diferencia de computación clásica donde un bit solo puede valer 1 o 0 por lo que el único error posible es un cambio de fase, osea que en lugar de obtener el resultado correcto 1 se obtenga un 0 o viceversa, a comparación de una computadora cuántica donde el estado dado por $\psi=A\ket{i}+B\ket{0}$ puede tener una infinidad de error.
+\end{itemize}
+
+Por fortuna se ha demostrado que cualquier grupo de errores se puede descomponer como una suma de compuertas en el grupo de Pauli $\{\mathbf{1},\mathbf{X},\mathbf{Z},\mathbf{XZ}\}$. Pero por la digitalización del error se ha descubierto que son fundamentalmente dos tipos de errores los que se presentan, los causados por $\mathbf{X}$, que cambian la fase del qbit tal que $X\ket{1}=\ket{0}$ y la operación contraria $X\ket{0}=\ket{1}$los de tipo $\mathbf{Z}$ que cambian la orientación tal que $Z\ket{1}=-\ket{1}$ y $Z\ket{0}=\ket{0}$.\\
+
+En computación clásica una de las formas más sencillas de hacer corrección de error es agregar redundancia, esto se hace copiando la información de un bit de manera que las operaciones se puede repetir en 2 o más bit para ayudar a la corrección de error. Esto no se puede replicar en un qbit por el teorema de la no clonación y el colapso de la función de onda de un qbit al medir, nosotros podemos medir la información de un bit en cualquier momento sabiendo que al medir no estamos cambiando la información, pero esto no es posible replicarse en un qbit.
+
+Una manera de agregar redundancia en un algoritmo cuántico es expandir el espacio de Hilbert en el que están codificados los qbits. Para explicar esto veamos el código de qbit para detectar, actuando en el estado general $\ket{\psi}$ tiene la siguiente acción:
+
+\begin{equation}
+    \ket{\psi}=\lambda\ket{0}+\beta\ket{1}\xrightarrow{codificador-de-2-qbits}\ket{\psi}_{L}=\lambda\ket{00}+\beta\ket{11}=\lambda\ket{0}_{L}+\beta\ket{1}_{L}
+\end{equation}
+
+La finalidad de esto es distribuir la información del estado cuántico $\ket{\psi}$ en el estado lógico bipartito entrelazado $\ket{\psi}_{L}$, agregando así redundancia sin tener que copiar el estado.\\
+
+Los qbits que se entrelazan son conocidos como qbits de información y los resultantes son los qbits lógicos sobre los que se operarán. Además de esto se utilizan otros qbits como refuerzo del qbit lógico para intentar medir el error, estos se le conoce como ancilla qbits o qbits esclavos. De este modo, se puede preservar la información de los qubits de datos. La medición convierte los errores continuos en errores discretos y permite identificar si hay errores y, en caso afirmativo, de qué tipo (bit- ﬂip, fase-ﬂip o ambos) y en qué qubit(s) se producen. Este tipo de medición se denomina medición del síndrome de error (por sus siglas en inglés ESM). \\
+
+Es importante notar que los errores no son corregidos de manera inmediata, sino que se guardan en bits de lógica clásica utilizando una técnica llamada el marco de Pauli ("Pauli Frame"). Las operaciones y mediciones cuánticas se traducen por el marco de Pauli, preservando la corrección de la computación cuántica, como el error podemos escribirlo como una matriz X o Z de manera que necesitaremos siempre 2n bits clásicos para guardar el error, donde n es el número de qubits.\\
+
+\subsubsection{Código de superficie}
+
+Actualmente, la tecnología más utilizada para la corrección de errores es la llamada código de superficie o más conocida por su nombre en inglés "surface code" En el código de superficie, los qubits se organizan en un enrejado 2D regular que solo permite la interacción con los vecinos más cercano (NN). La arquitectura de NN es una de las estructuras más prometedoras, ya que el código de superficie tiene un umbral de error del 1\%, lo que significa que puede tolerar una tasa de error físico de hasta 0,01.\\
+
+Lograr realizar un código de superficie rápido es una de las metas claves para poder tener hardware de computación cuántica efectiva. Este código forma parte de la familia de códigos topológicos. El principio general de diseño
+de los códigos topológicos es que se construye uniendo elementos repetidos. Un ejemplo de esta superficie la podemos ver en la imagen \ref{fig:superficie_2d}:\\
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=0.5\linewidth]{imagenes/stack/2d_surface.png}
+    \caption{Ejemplo de una superficie NN}
+    \label{fig:superficie_2d}
+\end{figure}
+
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=0.5\linewidth]{imagenes/stack/codigo-superficie.png}
+    \caption{Traducción a código de circuito de una superficie NN}
+    \label{fig:codigo-superficie}
+\end{figure}
+
+Los círculos en blanco representan qubits de datos y los círculos rellenos en verde y rojo corresponden a qbits de ancilla Z y X, respectivamente. Esto se traduce en código de circuito para cada 2 qbits lógicos como en la figura \ref{fig:codigo_superficie} donde $D_{1}$ y $D_{2}$ representan los qbits lógicos y $A_{1}$ y $A_{2}$ los qbits ancilla.
+
+\subsubsection{Otros códigos de corrección de error.}
+
+Mencionando de manera breve otras alternativas para la corrección del error, con la intención de que si el tema le genera interés, puede investigar más detalladamente:
+
+\textbf{El código de corrección de error de Bacon-Shor}, es igualmente un código de subsistema que forma un enrejado 2d para almacenar el error.\\
+
+En este método se colocan qubits físicos en los vértices. Los errores se pueden almacenar midiendo solo los vecinos más cercanos de dos qubits, utilizando los generadores estabilizadores del código de Shor. Creando el enrejado, que se muestra en la imagen.\\
+
+\begin{figure}[hbtp]
+    \centering
+    \includegraphics[width=0.5\linewidth]{imagenes/stack/Captura de pantalla 2024-11-11 202625.png}
+    \caption{Geometría del código Bacon-Shor(XX y ZZ son los estabilizadores, no confundir con las matrices de Pauli).}
+    \label{fig:codigo-superficie}
+\end{figure}
+
+A diferencia de otros códigos de corrección de error, del subsistema, el código Bacon-Shor utiliza menos restricciones estabilizadoras, lo que simplifica las mediciones y reduce la sobrecarga en la corrección de errores. La naturaleza sub sistémica del código le permite corregir errores con menos recursos y mantener una sólida protección contra la decoherencia y el ruido cuántico.
+
+\textbf{Código de colores(colour code):} es un tipo de código topológico de corrección de errores que codifica qubits lógicos en qubits físicos dispuestos en una red. Es una variante del código de superficie, pero utiliza un mosaico diferente de la red, normalmente basado en teselaciones triangulares o hexagonales. La principal característica del código de colores es que se basa en gráficos tricolores en los que las regiones adyacentes de la red tienen asignados distintos colores (rojo, verde y azul).\\
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{color-code.png}
+    \caption{El (4.8.8) código de colores para diferentes distancias D. Los círculos blancos representan qubtis lógicos.}
+    \label{fig:enter-label}
+\end{figure}
+
+El código de colores protege la información cuántica codificándola en la topología de la red, lo que la hace resistente a errores locales. Utiliza operadores estabilizadores (combinaciones de XX y ZZ) para detectar y corregir errores.\\
+
+El código de colores es ventajoso por su implementación de puertas tolerantes a fallos y su corrección uniforme de errores, pero tiene el coste de una mayor sobrecarga de qubits y procedimientos de medición más complejos. 
+
+\section{Conclusión}
+
+Durante las últimas décadas, la computación cuántica se ha comenzado a afianzar como una de las tecnologías más importantes para el futuro y hacer de ella una realidad. Como muestra de ello, está la publicación sobre la creación de la primera computadora cuántica que rompe la barrera de los mil qubits, llamada Condor y creada por IBM.\\
+
+Espero que estas notas funcionen como una buena introducción al tema y contribuyan a su curiosidad por investigar más sobre el tema y mantenerse informado sobre los múltiples descubrimientos que ocurren cada día.
